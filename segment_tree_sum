@@ -1,0 +1,49 @@
+class SegTree {
+    int leftMost, rightMost, sum;
+    SegTree left, right;
+    int[] a;
+
+    public SegTree(int[] a, int leftMost, int rightMost) {
+        this.a = a;
+        this.leftMost = leftMost;
+        this.rightMost = rightMost;
+        int mid = (rightMost + leftMost) / 2;
+        if (leftMost == rightMost) {
+            sum = a[leftMost];
+        } else {
+            left = new SegTree(a, leftMost, mid);
+            right = new SegTree(a, mid + 1, rightMost);
+            recalc();
+        }
+    }
+
+    private void recalc() {
+        if (leftMost == rightMost)
+            return;
+        sum = right.sum + left.sum;
+    }
+
+    void pointUpdate(int index, int newVal) {
+        if (leftMost == rightMost) {
+            sum = newVal;
+            return;
+        }
+        if (index <= left.rightMost)
+            left.pointUpdate(index, newVal);
+        else
+            right.pointUpdate(index, newVal);
+        recalc();
+    }
+
+    int rangeSum(int l, int r) {
+        // three cases:
+        // 1. not intersected
+        if (r < leftMost || rightMost < l)
+            return 0;
+        // 2. partially contained
+        if (l <= leftMost && r >= rightMost)
+            return sum;
+        // 3. don't know
+        return left.rangeSum(l, r) + right.rangeSum(l, r);
+    }
+}
