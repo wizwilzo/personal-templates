@@ -1,0 +1,41 @@
+class MultiSet {
+    TreeMap<Long, Integer> map = new TreeMap<>();
+    private int size = 0;
+    public MultiSet() {
+    }
+    public void add(Long val) {
+        map.put(val, map.getOrDefault(val, 0) + 1);
+        size++;
+    }
+    public void remove(Long val) {
+        map.put(val, map.get(val) - 1);
+        if (map.get(val) == 0) {
+            map.remove(val);
+        }
+        size--;
+    }
+    public int size() {
+        return size;
+    }
+    public Long higher(Long val) {
+        return map.higherKey(val);
+    }
+    public Long lower(Long val) {
+        return map.lowerKey(val);
+    }
+    public Long ceiling(Long val) {
+        return map.ceilingKey(val);
+    }
+    public Long floor(Long val) {
+        return map.floorKey(val);
+    }
+    public Long first() {
+        return map.firstKey();
+    }
+    public Long last() {
+        return map.lastKey();
+    }
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
+}
