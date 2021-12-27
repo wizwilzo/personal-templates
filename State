@@ -1,0 +1,8 @@
+class State {
+    public int weight;
+    public int node;
+    public State(int node, int weight) {
+        this.node = node;
+        this.weight = weight;
+    }
+}
